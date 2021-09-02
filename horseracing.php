@@ -12,7 +12,7 @@ if (!is_numeric($money))
 
 for ($i = 0; $i < $horseAmount; $i++)
 {
-    $horses[]= new stdClass();
+    $horses[] = new stdClass();
     $horses[$i]->symbol = readline("Enter horse nr.$i name: ");
     $horses[$i]->field = [$horses[$i]->symbol,"_","_","_","_","_","_","_","_","_","_"];
     $horses[$i]->currentPosition = 0;
@@ -79,7 +79,13 @@ while($finished < $horseAmount)
     echo PHP_EOL;
     for ($i = 0; $i < $horseAmount; $i++)
     {
-        if ($horses[$i]->finished === false)
+        if ($horses[$i]->currentPosition === count($horses[$i]->field)-2 && $horses[$i]->finished === false)
+        {
+            $horses[$i]->field[$horses[$i]->currentPosition] = "_";
+            $horses[$i]->currentPosition = $horses[$i]->currentPosition + 1;
+            $horses[$i]->field[$horses[$i]->currentPosition] = $horses[$i]->symbol;
+        }
+        elseif ($horses[$i]->finished === false)
         {
             $horses[$i]->field[$horses[$i]->currentPosition] = "_";
             $horses[$i]->currentPosition = $horses[$i]->currentPosition + rand(1,2);
