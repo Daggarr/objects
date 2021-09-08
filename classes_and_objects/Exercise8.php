@@ -24,7 +24,7 @@ class SavingsAccount
     public function addInterest(): float
     {
         $interestEarned = $this->balance * ($this->annualInterest/12);
-        $this->balance = $this->balance + $this->balance * ($this->annualInterest/12);
+        $this->balance = $this->balance + $interestEarned;
 
         return $interestEarned;
     }
@@ -55,7 +55,7 @@ for ($i = 1; $i <= $months; $i++)
 
     $totalInterest = $totalInterest + $account->addInterest();
 }
-echo "Total deposited: ".$totalDeposits."$".PHP_EOL;
-echo "Total withdrawn: ".$totalWithdrawals."$".PHP_EOL;
-echo "Total interest: ".$totalInterest."$".PHP_EOL;
-echo "Final balance: ".$account->getBalance()."$".PHP_EOL;
+echo "Total deposited: ".number_format($totalDeposits,2)."$".PHP_EOL;
+echo "Total withdrawn: ".number_format($totalWithdrawals,2)."$".PHP_EOL;
+echo "Total interest: ".number_format($totalInterest,2)."$".PHP_EOL;
+echo "Final balance: ".number_format($account->getBalance(),2)."$".PHP_EOL;
