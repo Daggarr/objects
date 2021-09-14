@@ -51,4 +51,18 @@ class CovidData
         return $this->covidData;
     }
 
+    public function filterByCountry($country): array
+    {
+        $filteredArray = [];
+
+        foreach ($this->covidData as $row)
+        {
+            if ($row->getCountry() === $country)
+            {
+                $filteredArray[] = $row;
+            }
+        }
+        return $filteredArray;
+    }
+
 }

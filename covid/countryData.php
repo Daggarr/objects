@@ -40,4 +40,9 @@ class CountryData
         $this->TestAfterArrival = $TestAfterArrival;
     }
 
+    public function getCountry(): string
+    {
+        return $this->country;
+    }
+
 }

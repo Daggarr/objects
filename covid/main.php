@@ -6,19 +6,6 @@
  $data = new CovidData();
  $data->readCovidData();
 
-
-
-
-//$covidTable = new LucidFrame\Console\ConsoleTable();
-//
-//var_dump($data->getCovidData()[0]->getDate());
-//
-//$covidTable
-//    ->addHeader($data->getCovidData()[0]->getDate())
-//    ->addHeader($data->getCovidData()[0]->getCountry())
-//    ->addRow()
-//;
-
 $table = new LucidFrame\Console\ConsoleTable();
 $table->setHeaders(array(
     'Datums','Valsts','Skaits','Izcelosana','Pasizolacija',
@@ -32,3 +19,23 @@ for ($i=1; $i < count($data->getCovidData()); $i++)
 
 $table->display();
 
+
+$country = readline('Search by country?: ');
+
+if ($country !== "no")
+{
+    $table2 = new LucidFrame\Console\ConsoleTable();
+    $filteredArray = $data->filterByCountry($country);
+
+    $table2->setHeaders(array(
+        'Datums','Valsts','Skaits','Izcelosana','Pasizolacija',
+        'Vakc_pasizolacija','vakc_TestsPirms','vakc_TestsPec',
+        'citi_pasizolacija','citi_TestsPirms','citi_TestsPec'));
+
+    for ($i=1; $i < count($filteredArray); $i++)
+    {
+        $table2->addRow((array) $filteredArray[$i]);
+    }
+
+    $table2->display();
+}
