@@ -2,13 +2,11 @@
 
 class GunStore
 {
-    private array $guns;
-    private Buyer $customer;
+    protected array $guns;
 
-    public function __construct(Buyer $customer)
+    public function __construct()
     {
         $this->guns = [];
-        $this->customer = $customer;
     }
 
     public function addHandgun(Handgun $handgun): void
@@ -29,17 +27,25 @@ class GunStore
         }
     }
 
-    public function buyGun(int $gunNr)
+    public function paymentMethods()
     {
-        if ($this->guns[$gunNr]->getPrice() < $this->customer->getMoney()
-            && in_array($this->guns[$gunNr]->getLicense(), $this->customer->getLicenses()))
+        $gunNr = readline("Enter number of which gun you would like to buy: ");
+
+        $paymentMethods = [new Cash($this->guns), new Creditcard($this->guns), new Paypal($this->guns)];
+
+        echo "[0] cash".PHP_EOL;
+        echo "[1] credit card".PHP_EOL;
+        echo "[2] paypal".PHP_EOL;
+
+        $paymentMethod = readline("How would you like to pay?:");
+        if (array_key_exists($paymentMethod, $paymentMethods) === true)
         {
-            echo "You bought {$this->guns[$gunNr]->getName()}".PHP_EOL;
-            $this->customer->setMoney($this->guns[$gunNr]->getPrice());
+            $paymentMethod = (int) $paymentMethod;
+            $paymentMethods[$paymentMethod]->payForGun($gunNr);
         }
         else
         {
-            echo "You can't buy that gun!".PHP_EOL;
+            echo "Invalid payment method!".PHP_EOL;
         }
     }
 }
